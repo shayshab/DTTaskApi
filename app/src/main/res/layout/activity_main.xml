@@ -3,20 +3,21 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:orientation="vertical"
     android:layout_height="match_parent"
     android:background="@color/teal_200"
+    android:orientation="vertical"
     tools:context=".MainActivity">
 
 
     <EditText
+        android:id="@+id/etappid"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:padding="10dp"
-        android:id="@+id/etappid"
         android:drawablePadding="10dp"
         android:hint="Application ID"
+        android:padding="10dp"
+        android:background="@drawable/shape"
         android:textColor="@color/white"
         android:textColorHint="@color/white" />
 
@@ -25,9 +26,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:padding="10dp"
+        android:background="@drawable/shape"
         android:drawablePadding="10dp"
         android:hint="User ID"
+        android:padding="10dp"
         android:textColor="@color/white"
         android:textColorHint="@color/white" />
 
@@ -37,37 +39,35 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:padding="10dp"
         android:drawablePadding="10dp"
         android:hint="Token"
+        android:background="@drawable/shape"
+        android:padding="10dp"
         android:textColor="@color/white"
-        android:textColorHint="@color/white"
-        android:textColorHighlight="@color/white"/>
-
+        android:textColorHighlight="@color/white"
+        android:textColorHint="@color/white" />
 
 
     <Button
         android:id="@+id/btshowdata"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Show Data"
-        android:shadowColor="@android:color/transparent"
-        android:padding="15dp"
-        android:layout_marginRight="10dp"
         android:layout_marginLeft="10dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="10dp"
         android:layout_marginBottom="10dp"
-        android:layout_marginTop="20dp" />
-
-
-
-
-
+        android:padding="15dp"
+        android:shadowColor="@android:color/transparent"
+        android:text="Show Data" />
 
 
     <androidx.recyclerview.widget.RecyclerView
 
         android:id="@+id/recyclerView"
+        android:padding="10dp"
+        android:background="@drawable/shapetwo"
+        android:layout_margin="15dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent" />
 
 </LinearLayout>
