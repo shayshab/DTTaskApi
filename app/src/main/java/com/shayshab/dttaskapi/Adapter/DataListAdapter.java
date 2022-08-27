@@ -31,7 +31,7 @@ public class DataListAdapter extends RecyclerView.Adapter<DataListAdapter.MyView
     @NotNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
-        return new MyViewHolder(LayoutInflater.from(context).inflate(R.layout., parent, false));
+        return new MyViewHolder(LayoutInflater.from(context).inflate(R.layout.layout_data_item, parent, false));
     }
 
     @Override
@@ -54,8 +54,8 @@ public class DataListAdapter extends RecyclerView.Adapter<DataListAdapter.MyView
         public MyViewHolder(@NonNull @NotNull View itemView) {
             super(itemView);
 
-            imgMovie = itemView.findViewById(R.id.im);
-            txtMovieName = itemView.findViewById(R.id.txtMovieName);
+            imgMovie = itemView.findViewById(R.id.imgData);
+            txtMovieName = itemView.findViewById(R.id.txtDataName);
 
         }
     }
