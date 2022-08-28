@@ -1,7 +1,6 @@
 package com.shayshab.dttaskapi.Network;
 
 import java.util.concurrent.TimeUnit;
-
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.converter.gson.GsonConverterFactory;

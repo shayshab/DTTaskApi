@@ -1,27 +1,16 @@
 package com.shayshab.dttaskapi;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
-
 import com.shayshab.dttaskapi.Adapter.DataListAdapter;
 import com.shayshab.dttaskapi.Model.DataModel;
 import com.shayshab.dttaskapi.ViewModel.MainActivityViewModel;
-
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -112,8 +101,6 @@ public class MainActivity extends AppCompatActivity {
             return false;
         }
 
-
-        // after all validation return true.
         return true;
     }
 }

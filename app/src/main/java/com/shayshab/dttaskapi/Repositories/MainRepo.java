@@ -1,14 +1,11 @@
 package com.shayshab.dttaskapi.Repositories;
 import android.util.Log;
-
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-
 import com.shayshab.dttaskapi.Common.Common;
 import com.shayshab.dttaskapi.Model.DataModel;
 import com.shayshab.dttaskapi.Network.APIService;
 
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
