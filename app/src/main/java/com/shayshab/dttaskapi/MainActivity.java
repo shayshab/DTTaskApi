@@ -31,9 +31,9 @@ public class MainActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     DataListAdapter adapter;
     LinearLayoutManager layoutManager;
-    EditText eappid;
-    EditText euserid;
-    EditText etoken;
+    EditText eAppid;
+    EditText eUserid;
+    EditText eToken;
     Button showData;
     //String appid = "2070";
     //String userid = "superman";
@@ -41,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
     String locale = "DE";
     String offer_types = "112";
     //String token = "1c915e3b5d42d05136185030892fbb846c278927";
+    boolean isAllFieldsChecked = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,26 +50,34 @@ public class MainActivity extends AppCompatActivity {
 
         mainActivityViewModel = new ViewModelProvider(this).get(MainActivityViewModel.class);
 
-        eappid = findViewById(R.id.etappid);
-        euserid = findViewById(R.id.etuserid);
-        etoken = findViewById(R.id.ettoken);
+        eAppid = findViewById(R.id.etappid);
+        eUserid = findViewById(R.id.etuserid);
+        eToken = findViewById(R.id.ettoken);
         showData = findViewById(R.id.btshowdata);
         recyclerView = findViewById(R.id.recyclerView);
 
-        String appid =  eappid.getText().toString();
-        String userid = euserid.getText().toString();
-        String token = etoken.getText().toString();
+        String appid =  eAppid.getText().toString();
+        String userid = eUserid.getText().toString();
+        String token = eToken.getText().toString();
 
         showData.setOnClickListener(view -> {
-            showDataList(token, appid, userid, ip, locale, offer_types);
+
+            isAllFieldsChecked = CheckAllFields();
+            if(isAllFieldsChecked)
+            {
+                showDataList(token, appid, userid, ip, locale, offer_types);
+            }
+
+
+
         });
 
     }
 
     private void showDataList(String token, String appid, String userid, String ip, String locale, String offer_types) {
-        mainActivityViewModel.getDataList(token, appid, userid, ip, locale, offer_types).observe(this, movieModels -> {
-            if (movieModels != null){
-                setDataInAdapter(movieModels.getOffers());
+        mainActivityViewModel.getDataList(token, appid, userid, ip, locale, offer_types).observe(this, dataModels -> {
+            if (dataModels != null){
+                setDataInAdapter(dataModels.getOffers());
             }
             else {
                 Toast.makeText(this, "Data Not Found!!!", Toast.LENGTH_SHORT).show();
@@ -86,4 +95,26 @@ public class MainActivity extends AppCompatActivity {
 
         }
     }
+
+    private boolean CheckAllFields() {
+        if (eAppid.length() == 0) {
+            eAppid.setError("This field is required");
+            return false;
+        }
+
+        if (eUserid.length() == 0) {
+            eUserid.setError("This field is required");
+            return false;
+        }
+
+        if (eToken.length() == 0) {
+            eToken.setError("Email is required");
+            return false;
+        }
+
+
+        // after all validation return true.
+        return true;
+    }
 }
+

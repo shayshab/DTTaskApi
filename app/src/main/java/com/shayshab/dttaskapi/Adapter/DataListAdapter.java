@@ -37,8 +37,8 @@ public class DataListAdapter extends RecyclerView.Adapter<DataListAdapter.MyView
 
     @Override
     public void onBindViewHolder(@NonNull @NotNull MyViewHolder holder, int position) {
-        Picasso.get().load(dataModelList.get(position).getThumbnail().getHires()).into(holder.imgMovie);
-        holder.txtMovieName.setText(dataModelList.get(position).getTitle());
+        Picasso.get().load(dataModelList.get(position).getThumbnail().getHires()).into(holder.imgData);
+        holder.txtDataName.setText(dataModelList.get(position).getTitle());
 
     }
 
@@ -49,14 +49,14 @@ public class DataListAdapter extends RecyclerView.Adapter<DataListAdapter.MyView
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
-        ImageView imgMovie;
-        TextView txtMovieName;
+        ImageView imgData;
+        TextView txtDataName;
 
         public MyViewHolder(@NonNull @NotNull View itemView) {
             super(itemView);
 
-            imgMovie = itemView.findViewById(R.id.imgData);
-            txtMovieName = itemView.findViewById(R.id.txtDataName);
+            imgData = itemView.findViewById(R.id.imgData);
+            txtDataName = itemView.findViewById(R.id.txtDataName);
 
         }
     }
