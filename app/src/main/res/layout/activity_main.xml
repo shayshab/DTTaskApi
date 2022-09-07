@@ -10,7 +10,7 @@
 
 
     <EditText
-        android:id="@+id/etappid"
+        android:id="@+id/edtAppID"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
@@ -22,7 +22,7 @@
         android:textColorHint="@color/white" />
 
     <EditText
-        android:id="@+id/etuserid"
+        android:id="@+id/edtUserId"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
@@ -35,7 +35,7 @@
 
 
     <EditText
-        android:id="@+id/ettoken"
+        android:id="@+id/edtToken"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
@@ -49,7 +49,7 @@
 
 
     <Button
-        android:id="@+id/btshowdata"
+        android:id="@+id/btnGetData"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"

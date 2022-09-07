@@ -13,8 +13,8 @@ public class MainActivityViewModel extends ViewModel {
         mainRepo = new MainRepo();
     }
 
-    public LiveData<DataModel> getDataList(String auth_token, String appid, String uid, String ip, String locale, String offer_types){
-        return mainRepo.getDataResponse(auth_token, appid, uid, ip, locale, offer_types);
+    public LiveData<DataModel> getDataList(String path, String appid, String uid, String token, String ip, String locale, long timestamp, String offer_types, String hashkey){
+        return mainRepo.getApiResponse(path, appid, uid, token, ip, locale, timestamp, offer_types, hashkey);
 
     }
 

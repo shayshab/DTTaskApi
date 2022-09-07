@@ -1,17 +1,32 @@
 package com.shayshab.dttaskapi;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.Signature;
 import android.os.Bundle;
+
+
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.provider.Settings;
+import android.util.Base64;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 import com.shayshab.dttaskapi.Adapter.DataListAdapter;
+import com.shayshab.dttaskapi.Common.Common;
 import com.shayshab.dttaskapi.Model.DataModel;
 import com.shayshab.dttaskapi.ViewModel.MainActivityViewModel;
+
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -19,57 +34,86 @@ public class MainActivity extends AppCompatActivity {
 
     RecyclerView recyclerView;
     DataListAdapter adapter;
-    LinearLayoutManager layoutManager;
-    EditText eAppid;
-    EditText eUserid;
-    EditText eToken;
-    Button showData;
-    //String appid = "2070";
-    //String userid = "superman";
-    String ip = "109.235.143.113";
-    String locale = "DE";
-    String offer_types = "112";
-    //String token = "1c915e3b5d42d05136185030892fbb846c278927";
-    boolean isAllFieldsChecked = false;
+    String hashKey, deviceID, path = "offers.json";
+    long timeStamp;
+
+
+
+    EditText edtToken, edtUserId, edtAppID;
+    String eToken, eUserID, eAppId;
+    Button btnGetData;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mainActivityViewModel = new ViewModelProvider(this).get(MainActivityViewModel.class);
 
-        eAppid = findViewById(R.id.etappid);
-        eUserid = findViewById(R.id.etuserid);
-        eToken = findViewById(R.id.ettoken);
-        showData = findViewById(R.id.btshowdata);
-        recyclerView = findViewById(R.id.recyclerView);
+        printKeyHash();
 
-        String appid =  eAppid.getText().toString();
-        String userid = eUserid.getText().toString();
-        String token = eToken.getText().toString();
-
-        showData.setOnClickListener(view -> {
-
-            isAllFieldsChecked = CheckAllFields();
-            if(isAllFieldsChecked)
-            {
-                showDataList(token, appid, userid, ip, locale, offer_types);
-            }
+        initViews();
 
 
+        timeStamp = System.currentTimeMillis() / 1000L;
+        Log.d("Time Stamp", String.valueOf(timeStamp));
 
-        });
+        deviceID = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
+        Log.e("Device ID", "" + deviceID);
+
+
 
     }
 
-    private void showDataList(String token, String appid, String userid, String ip, String locale, String offer_types) {
-        mainActivityViewModel.getDataList(token, appid, userid, ip, locale, offer_types).observe(this, dataModels -> {
-            if (dataModels != null){
-                setDataInAdapter(dataModels.getOffers());
+
+    private void initViews() {
+        edtToken = findViewById(R.id.edtToken);
+        edtUserId = findViewById(R.id.edtUserId);
+        edtAppID = findViewById(R.id.edtAppID);
+        btnGetData = findViewById(R.id.btnGetData);
+        recyclerView = findViewById(R.id.recyclerView);
+
+        edtUserId.setText(Common.USER_ID);
+        edtAppID.setText(Common.APP_ID);
+        edtToken.setText(Common.TOKEN);
+
+        btnGetData.setOnClickListener(view -> {
+            showDataList();
+        });
+    }
+
+
+        private void printKeyHash() {
+            try {
+
+                PackageInfo info = getPackageManager().getPackageInfo("com.shayshab.dttaskapi", PackageManager.GET_SIGNATURES);
+                for (Signature signature : info.signatures){
+                    MessageDigest md = MessageDigest.getInstance("SHA1");
+                    md.update(signature.toByteArray());
+
+                    hashKey = Base64.encodeToString(md.digest(), Base64.DEFAULT);
+                    Log.d("KEYHASH", hashKey);
+                }
             }
-            else {
-                Toast.makeText(this, "Data Not Found!!!", Toast.LENGTH_SHORT).show();
+            catch (PackageManager.NameNotFoundException e) {
+                e.printStackTrace();
+            } catch (NoSuchAlgorithmException e) {
+                e.printStackTrace();
+            }
+        }
+
+
+
+    private void showDataList() {
+        mainActivityViewModel = new ViewModelProvider(this).get(MainActivityViewModel.class);
+        eUserID = edtUserId.getText().toString();
+        eAppId = edtAppID.getText().toString();
+        eToken = edtToken.getText().toString();
+
+        mainActivityViewModel.getDataList(path, eAppId, eUserID, eToken, Common.IP, Common.LOCALE, timeStamp, Common.OFFER_TYPES, hashKey).observe(this, getApiResponse -> {
+            if (getApiResponse != null){
+               setDataInAdapter(getApiResponse.getOffers());
+                Log.d("Data", getApiResponse.getMessage());
             }
         });
     }
@@ -85,23 +129,23 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private boolean CheckAllFields() {
-        if (eAppid.length() == 0) {
-            eAppid.setError("This field is required");
-            return false;
-        }
-
-        if (eUserid.length() == 0) {
-            eUserid.setError("This field is required");
-            return false;
-        }
-
-        if (eToken.length() == 0) {
-            eToken.setError("Email is required");
-            return false;
-        }
-
-        return true;
-    }
+//    private boolean CheckAllFields() {
+//        if (eAppid.length() == 0) {
+//            eAppid.setError("This field is required");
+//            return false;
+//        }
+//
+//        if (eUserid.length() == 0) {
+//            eUserid.setError("This field is required");
+//            return false;
+//        }
+//
+//        if (eToken.length() == 0) {
+//            eToken.setError("Email is required");
+//            return false;
+//        }
+//
+//        return true;
+//    }
 }
 
